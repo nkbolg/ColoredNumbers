@@ -5,37 +5,49 @@ GameboardModel::GameboardModel()
     :QAbstractListModel(nullptr)
 {
     float currentHue = 0.0;
-    for (int i = 0; i < 3; ++i) {
-        colors.push_back(QColor::fromHslF(currentHue, 1.0, 0.5) );
-        currentHue += 0.618033988749895f;
-        currentHue = std::fmod(currentHue, 1.0f);
-        numbers.push_back(2);
+    for (int i = 0; i < sz; ++i) {
+        for (int j = 0; j < sz; ++j) {
+            colors[i][j] = QColor::fromHslF(currentHue, 1.0, 0.5);
+            currentHue += 0.618033988749895f;
+            currentHue = std::fmod(currentHue, 1.0f);
+            numbers[i][j] = i*10+j;
+        }
     }
 }
 
 int GameboardModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    qDebug () << "Size: " << colors.size();
-    return colors.size();
+//    qDebug () << "Size: " << colors.size();
+    return colors.size()*colors.size();
 }
 
 QVariant GameboardModel::data(const QModelIndex &index, int role) const
 {
-    qDebug () << "Data called, index: " << index << " Role: " << role;
-    if (!index.isValid() || index.row() >= (int)colors.size()) {
+    int idx = index.row();
+    int x = idx % sz;
+    int y = idx / sz;
+//    qDebug () << "Data called, index: " << index << " Role: " << role;
+    if (!index.isValid() || x >= (int)colors.size()
+                         || y >= (int)colors.size()) {
         return QVariant();
     }
 
     if (role == ColorRole) {
-        return colors[index.row()];
+        return colors[y][x];
     }
     else if (role == NumberRole) {
-        return numbers[index.row()];
+        return numbers[y][x];
     }
     else {
         return QVariant();
     }
+}
+
+void GameboardModel::onButtonClicked(int idx)
+{
+    qDebug () << idx;
+//    btn->setProperty("number", 1);
 }
 
 QHash<int, QByteArray> GameboardModel::roleNames() const

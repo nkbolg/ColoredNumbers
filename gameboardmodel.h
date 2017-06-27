@@ -1,7 +1,7 @@
 #ifndef GAMEBOARDMODEL_H
 #define GAMEBOARDMODEL_H
 #include <QAbstractListModel>
-#include <vector>
+#include <array>
 #include <QColor>
 
 class GameboardModel : public QAbstractListModel
@@ -19,11 +19,14 @@ public:
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
+    Q_INVOKABLE void onButtonClicked(int idx);
+
 protected:
     QHash<int, QByteArray> roleNames() const override;
 private:
-    std::vector<QColor> colors;
-    std::vector<int> numbers;
+    static constexpr int sz = 4;
+    std::array<std::array<QColor, sz>, sz> colors;
+    std::array<std::array<int, sz>, sz> numbers;
 };
 
 #endif // GAMEBOARDMODEL_H

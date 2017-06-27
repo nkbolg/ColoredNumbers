@@ -9,11 +9,7 @@ Button {
 //    Material.background: gameboard.currPlayer == 0 ? Material.Indigo : Material.Teal
     onClicked: {
         number++
-//        background.color = gameboard.currPlayer == 0 ? "red" : "blue"
-        gameboard.currPlayer ^= 1
-//        console.log(idx, idy)
-//        console.log(btnCont.gg())
-//        console.log(this.parent)
-//        console.log(this.parent.children)
+        gameBoardModel.onButtonClicked(index)
+        console.log(index)
     }
 }
