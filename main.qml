@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.2
 
 ApplicationWindow {
     visible: true
@@ -8,26 +9,19 @@ ApplicationWindow {
     height: 240
     property int currPlayer: 0
     id: gameboard
-    ColumnLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        anchors.top: parent.top
-        Repeater {
-            model: 4
-            id: repCols
-            RowLayout {
-                id: row
-                property int index: index
-                Repeater {
-                    model: 4
-                    id: repRows
-                    ColoredBtn{
-                        property int idx: index
-                        property int idy: 0
-                    }
-                }
-            }
-        }
+    property int rows: 4
+    property int cols: 4
 
+    GridView {
+        id: view
+        anchors.fill: parent
+        model: gameBoardModel
+
+        delegate: Button {
+                width: 50
+                height: 50
+                text: gbNumber
+                Material.background: gbColor
+            }
     }
 }
