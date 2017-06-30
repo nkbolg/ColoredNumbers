@@ -24,7 +24,7 @@ public:
 protected:
     QHash<int, QByteArray> roleNames() const override;
 private:
-    static constexpr int sz = 4;
+    static constexpr int sz = 10;
     std::array<std::array<QColor, sz>, sz> colors;
     std::array<std::array<int, sz>, sz> numbers;
 };

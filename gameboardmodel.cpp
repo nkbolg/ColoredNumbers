@@ -47,6 +47,10 @@ QVariant GameboardModel::data(const QModelIndex &index, int role) const
 void GameboardModel::onButtonClicked(int idx)
 {
     qDebug () << idx;
+    int x = idx % sz;
+    int y = idx / sz;
+    colors[y][x] = QColor("cyan");
+    emit dataChanged(createIndex(idx, 0),createIndex(idx, 0));
 //    btn->setProperty("number", 1);
 }
 
